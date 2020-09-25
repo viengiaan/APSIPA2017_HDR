@@ -21,22 +21,16 @@ How to test
 -------------
 > After training: run "main.m" in "matlab_code" folder for testing.
 
-Reference
+Citing Single-Shot HDR Imaging
 -------------
-@INPROCEEDINGS{APSIPA2017_An,
 
-  author={V. G. {An} and C. {Lee}},
-  
-  booktitle={2017 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)}, 
-  
-  title={Single-shot high dynamic range imaging via deep convolutional neural network}, 
-  
-  year={2017},
-  
-  volume={},
-  
-  number={},
-  
-  pages={1768-1772},
-  
-}
+If you find our work useful in your research, please consider citing:
+
+    @INPROCEEDINGS{APSIPA2017_An,
+        author = {V. G. {An} and C. {Lee}},
+        title = {Single-shot high dynamic range imaging via deep convolutional neural network},
+        booktitle = {2017 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)},
+        year = {2017},
+        pages={1768-1772},
+    }
+
