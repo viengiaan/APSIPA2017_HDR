@@ -1,0 +1,381 @@
+name: "HDRnet"
+layer {
+ name: "data"
+ type: "HDF5Data"
+ top: "data"
+ top: "label"
+ hdf5_data_param{
+	source: "/media/viengiaan/5A50FB031DBBF68F/HDR_PROJECT/ComparableMethod/APSIPA_v2/train.txt"
+	batch_size: 128
+ }
+ include: { phase: TRAIN }
+}
+
+layer {
+ name: "data"
+ type: "HDF5Data"
+ top: "data"
+ top: "label"
+ hdf5_data_param{
+	source: "/media/viengiaan/5A50FB031DBBF68F/HDR_PROJECT/ComparableMethod/APSIPA_v2/test.txt"
+	batch_size: 64
+ }
+ include: { phase: TEST }
+}
+
+### Feature Extraction
+
+layer {
+  bottom: "data"
+  top: "conv1_1"
+  name: "conv1_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 128
+    pad: 1
+    kernel_size: 3
+    weight_filler {
+       type: "msra"
+    }
+  }
+}
+
+layer {
+ bottom: "conv1_1"
+ top: "res2a_b1"
+ name: "res2a_b1"
+ type: "Convolution"
+ convolution_param {
+  num_output: 128
+  kernel_size: 3
+  pad: 1
+  weight_filler {
+       type: "msra"
+  }
+ }   
+}
+
+layer {
+ bottom: "res2a_b1"
+ top: "bn1_2"
+ name: "bn1_2"
+ type: "BatchNorm"
+ batch_norm_param {
+   eps: 1e-5
+ }
+}
+
+layer {
+ bottom: "bn1_2"
+ top: "bn1_2"
+ name: "af1_2"
+ type: "ReLU"
+}
+
+layer {
+ bottom: "bn1_2"
+ top: "res2a_b2"
+ name: "res2a_b2"
+ type: "Convolution"
+ convolution_param {
+  num_output: 128
+  kernel_size: 3
+  pad: 1
+  weight_filler {
+       type: "msra"
+  }
+ }   
+}
+
+layer {
+ bottom: "res2a_b2"
+ top: "bn1_3"
+ name: "bn1_3"
+ type: "BatchNorm"
+ batch_norm_param {
+   eps: 1e-5
+ }
+}
+
+layer {
+ bottom: "conv1_1"
+ bottom: "bn1_3"
+ top: "res2a"
+ name: "res2a"
+ type: "Eltwise"
+}
+
+layer {
+  bottom: "res2a"
+  top: "conv2_1"
+  name: "conv2_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 256
+    stride: 2
+    kernel_size: 2
+    weight_filler {
+       type: "msra"
+    }
+  }
+}
+
+layer {
+ bottom: "conv2_1"
+ top: "res3a_b1"
+ name: "res3a_b1"
+ type: "Convolution"
+ convolution_param {
+  num_output: 256
+  kernel_size: 3
+  pad: 1
+  weight_filler {
+       type: "msra"
+  }
+ }   
+}
+
+layer {
+ bottom: "res3a_b1"
+ top: "bn2_2"
+ name: "bn2_2"
+ type: "BatchNorm"
+ batch_norm_param {
+   eps: 1e-5
+ }
+}
+
+layer {
+ bottom: "bn2_2"
+ top: "bn2_2"
+ name: "af2_2"
+ type: "ReLU"
+}
+
+layer {
+ bottom: "bn2_2"
+ top: "res3a_b2"
+ name: "res3a_b2"
+ type: "Convolution"
+ convolution_param {
+  num_output: 256
+  kernel_size: 3
+  pad: 1
+  weight_filler {
+       type: "msra"
+  }
+ }   
+}
+
+layer {
+ bottom: "res3a_b2"
+ top: "bn2_3"
+ name: "bn2_3"
+ type: "BatchNorm"
+ batch_norm_param {
+   eps: 1e-5
+ }
+}
+
+layer {
+ bottom: "conv2_1"
+ bottom: "bn2_3"
+ top: "res3a"
+ name: "res3a"
+ type: "Eltwise"
+}
+
+layer {
+  bottom: "res3a"
+  top: "conv3_1"
+  name: "conv3_1"
+  type: "Convolution"
+  convolution_param {
+    num_output: 512
+    stride: 2
+    kernel_size: 2
+    weight_filler {
+       type: "msra"
+    }
+  }
+}
+
+layer {
+ bottom: "conv3_1"
+ top: "res4a_b1"
+ name: "res4a_b1"
+ type: "Convolution"
+ convolution_param {
+  num_output: 512
+  kernel_size: 3
+  pad: 1
+  weight_filler {
+       type: "msra"
+  }
+ }   
+}
+
+layer {
+ bottom: "res4a_b1"
+ top: "bn3_2"
+ name: "bn3_2"
+ type: "BatchNorm"
+ batch_norm_param {
+   eps: 1e-5
+ }
+}
+
+layer {
+ bottom: "bn3_2"
+ top: "bn3_2"
+ name: "af3_2"
+ type: "ReLU"
+}
+
+layer {
+ bottom: "bn3_2"
+ top: "res4a_b2"
+ name: "res4a_b2"
+ type: "Convolution"
+ convolution_param {
+  num_output: 512
+  kernel_size: 3
+  pad: 1
+  weight_filler {
+       type: "msra"
+  }
+ }   
+}
+
+layer {
+ bottom: "res4a_b2"
+ top: "bn3_3"
+ name: "bn3_3"
+ type: "BatchNorm"
+ batch_norm_param {
+   eps: 1e-5
+ }
+}
+
+layer {
+ bottom: "conv3_1"
+ bottom: "bn3_3"
+ top: "res4a"
+ name: "res4a"
+ type: "Eltwise"
+}
+
+# Reconstruction + Enhancement
+
+layer {
+    bottom: "res4a"
+    top: "R_conv1_1"
+    name: "R_conv1_1"
+    type: "Deconvolution"
+    convolution_param {
+    	num_output: 256
+        kernel_size: 4
+        stride: 2
+        pad: 1 
+ 	weight_filler {
+       		type: "msra"
+  	}     
+    }
+}
+
+layer {
+ bottom: "R_conv1_1"
+ bottom: "res3a"
+ top: "R_conv1_2"
+ name: "R_conv1_2"
+ type: "Eltwise"
+}
+
+layer {
+ bottom: "R_conv1_2"
+ top: "R_Bn1"
+ name: "R_Bn1"
+ type: "BatchNorm"
+ batch_norm_param {
+   eps: 1e-5
+ }
+}
+
+layer {
+ bottom: "R_Bn1"
+ top: "R_Bn1"
+ name: "R_relu1"
+ type: "ReLU"
+}
+
+layer {
+    bottom: "R_Bn1"
+    top: "R_conv2_1"
+    name: "R_conv2_1"
+    type: "Deconvolution"
+    convolution_param {
+    	num_output: 128
+        kernel_size: 4
+        stride: 2
+        pad: 1   
+ 	weight_filler {
+       		type: "msra"
+  	}   
+    }
+}
+
+layer {
+ bottom: "R_conv2_1"
+ bottom: "res2a"
+ top: "R_conv2_2"
+ name: "R_conv2_2"
+ type: "Eltwise"
+}
+
+layer {
+ bottom: "R_conv2_2"
+ top: "R_Bn2"
+ name: "R_Bn2"
+ type: "BatchNorm"
+ batch_norm_param {
+   eps: 1e-5
+ }
+}
+
+layer {
+ bottom: "R_Bn2"
+ top: "R_Bn2"
+ name: "R_relu2"
+ type: "ReLU"
+}
+
+layer {
+ bottom: "R_Bn2"
+ top: "R_conv3_1"
+ name: "R_conv3_1"
+ type: "Convolution"
+ convolution_param {
+  num_output: 1
+  kernel_size: 3
+  pad: 1
+  weight_filler {
+       	type: "msra"
+  }  
+ }   
+}
+
+# Loss function
+
+layer {
+    name: "loss"
+    type: "Python"
+    bottom: "R_conv3_1"
+    bottom: "label"
+    top: "loss"
+    python_param {
+	module: "L2"
+	layer: "L2Loss"
+   }
+    loss_weight: 1
+}
+

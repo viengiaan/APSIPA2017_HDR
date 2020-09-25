@@ -1,0 +1,31 @@
+# Net
+net: "/media/viengiaan/5A50FB031DBBF68F/HDR_PROJECT/ComparableMethod/APSIPA_v2/HDR.prototxt"
+
+# Test iteration
+test_iter: 198
+test_interval: 500
+
+# Adam parameters
+base_lr: 0.001
+lr_policy: "step"
+stepsize: 50000
+gamma: 0.1
+
+momentum: 0.9
+
+# Display
+display: 100
+
+# Maximum iteration
+max_iter: 150000
+
+# snap shot
+snapshot: 5000
+snapshot_prefix: "/media/viengiaan/5A50FB031DBBF68F/HDR_PROJECT/ComparableMethod/APSIPA_v2/caffemodel/HDR"
+
+# solver mode
+solver_mode: GPU
+
+# Type of Back propagration algorithm
+type: "Adam"
+
