@@ -3,7 +3,7 @@ function HDR = CNN(input, size_input, stride, net_weights, net_model, flag)
     phase = 'test';
     net = caffe.Net(net_model, net_weights, phase);
     
-    im_input = VDP(input) / (2^12 - 1);
+    im_input = input
     [m,n] = size(im_input);
     hei = m;
     wid = n;
