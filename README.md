@@ -24,7 +24,9 @@ How to test
 Reference
 -------------
 @INPROCEEDINGS{APSIPA2017_An,
+
   author={V. G. {An} and C. {Lee}},
+  
   booktitle={2017 Asia-Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)}, 
   
   title={Single-shot high dynamic range imaging via deep convolutional neural network}, 
@@ -32,6 +34,9 @@ Reference
   year={2017},
   
   volume={},
+  
   number={},
+  
   pages={1768-1772},
+  
 }
