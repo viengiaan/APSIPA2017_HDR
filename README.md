@@ -19,4 +19,4 @@ caffe train -solver [PATH]/solver.prototxt
 
 How to test
 -------------
-> After training: run "main.m" for testing.
+> After training: run "main.m" in "matlab_code" folder for testing.
