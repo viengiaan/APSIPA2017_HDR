@@ -6,6 +6,8 @@ Prerequisites
 -------------
 * Caffe (Matcaffe and Pycaffe)
 * Python 3.xxx
+* Matlab 2020a
+* HDR tool box: run "installHDRToolbox.m" in "HDR_Toolbox-master" folder.
 
 Full version for training
 -------------
